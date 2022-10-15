@@ -86,6 +86,7 @@ gem "factory_bot_rails"
 gem "bundler-audit"
 gem "brakeman"
 gem "faker"
+gem "lefthook"
 # Use Pagy to add paginated results [https://github.com/ddnexus/pagy]
 gem "pagy"
 # Use Ransack to enable the creation of search forms for your application [https://github.com/activerecord-hackery/ransack]
