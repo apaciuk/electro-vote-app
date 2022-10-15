@@ -9,4 +9,11 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :services
+  has_many :ballots
+  has_many :campaigns, through: :ballots
+  has_many :campaigns, through: :campaigns_users
+  has_many :campaigns_users
+  has_many :ballot_prompts, through: :ballots
+  has_many :ballot_choices, through: :ballots
+  has_many :ballot_responses, through: :ballots
 end

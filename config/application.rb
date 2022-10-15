@@ -18,9 +18,14 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module ElectroVoteApp
+module ElectroVote
   class Application < Rails::Application
+    # Provides an HTML generator for displaying errors that come from Active Model
+    config.action_view.field_error_proc = Proc.new do |html_tag, instance|
+      raw Nokogiri::HTML.fragment(html_tag).child.add_class("is-invalid")
+    end
     config.active_job.queue_adapter = :sidekiq
+
     config.application_name = Rails.application.class.module_parent_name
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -34,6 +39,15 @@ module ElectroVoteApp
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.generators do |g|
+    g.orm             :active_record
+    g.template_engine :erb
+    g.test_framework  :rspec, fixture: false
+    g.fixture_replacement :factory_bot, dir: "spec/factories"
+    g.stylesheets     false
+    g.javascripts     false
+    g.helper          false
+    g.system_tests    nil
+    end
   end
 end
